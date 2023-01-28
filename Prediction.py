@@ -2,8 +2,18 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
+def execute_notebook(notebook_path):
+    import os
+    os.system(f'jupyter nbconvert --to script {notebook_path}')
+    script_path = notebook_path.replace('.ipynb', '.py')
+    os.system(f'python {script_path}')
 
-loaded_model = tf.keras.models.load_model("saved_model/Classification")
+try:
+    loaded_model = tf.keras.models.load_model("saved_model/Classification")
+except:
+    execute_notebook("CNN.ipynb")
+    loaded_model = tf.keras.models.load_model("saved_model/Classification")
+
 
 
 img = Image.open("auto.jpg")
